@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import App from './App';
+import App from './App';
 import './App.css';
-import ReduxStudents from './containers/ReduxStudents';
 // import registerServiceWorker from './registerServiceWorker';
 // import rootReducer from './reducers/rootreducer.js';
 
@@ -21,7 +20,7 @@ const theStore = createStore(reducers)
 
 ReactDOM.render(
 	<Provider store={theStore}>
-		<ReduxStudents />
+		<App />
 	</Provider>,
 	document.getElementById('root'));
 // registerServiceWorker();

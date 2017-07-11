@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Students from './Students';
+import Home from './containers/Home';
+// import NavBar from './containers/NavBar';
+import NavBar from './components/NavBar';
+import Register from './containers/Register';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 
 class App extends Component {
 	render() {
 	return (
-		<div className="App">
-			<div className="App-header">
-				<img src={logo} className="App-logo" alt="logo" />
-				<h2>Dr. Zaius. Dr. Zaius.</h2>
+		<Router>
+			<div className="App">
+				<NavBar />
+				<div className='container main'>
+					<Route exact path='/' component={Home} />
+					<Route exact path='/register' component={Register} />
+				</div>
 			</div>
-			<p className="App-intro">
-				To get started, edit <code className='notTaco'>src/App.js</code> and save to reload.
-			</p>
-			<Students />
-		</div>
+		</Router>
 	);
 	}
 }
