@@ -1,9 +1,48 @@
-import React, {Component} from 'react'
-import {Link, Route} from 'react-router-dom'
-import Slick from './Slick'
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
+// import $ from 'jquery';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import fetchPLines from '../actions/fetchPLines';
+
 
 class NavBar extends Component{
+	// constructor(props) {
+	// 	super(props);
+	// 	this.state = {
+	// 		ressie: []
+	// 	}
+	// }
+
+	componentDidMount() {
+		// const baseUrl = window.hostAddress + 'productlines/get';
+		// $.getJSON(baseUrl, (results)=>{
+		// 	this.setState({ressie:results});
+		// });
+		this.props.fetchPLines();
+	}
+
+
+
   render(){
+  	var shopMenu = [];
+  	// this.state.ressie.map((pl,index)=>{
+  	// 	shopMenu.push(
+  	// 		<Link to={`/shop/${pl.link}`} key={index}>{pl.productLine}</Link>
+  	// 	)
+  	// 	return 'meh'
+  	// })
+  	if(this.props.pl[0] === undefined){
+  		shopMenu = []
+  	}else{
+  		this.props.pl.map((p, i)=>{
+  			shopMenu.push(
+				<Link to={`/shop/${p.link}`} key={i}>{p.productLine}</Link>
+			)
+			return 'meh'
+  		})
+  	}
+
     return(
     	<div>
 			<nav className="navbar navbar-default navbar-fixed-top">
@@ -11,21 +50,20 @@ class NavBar extends Component{
 			    <ul className="nav navbar-nav">
 			    	<li><Link to="/">Home</Link></li>
 			      	<li className="dropdown">
-			      		<Link to="/shop">Shop <i className="arrow down" /></Link>
+			      		<Link to="/shop">Shop  <i className="arrow down" /></Link>
 			      		<ul className="dropdown-links">
-			      			<Link to="/shop/cars">Cars</Link>
-			      			<Link to="/shop/motorcycles">Motorcycles</Link>
-			      			<Link to="/shop/planes">Planes</Link>
-			      			<Link to="/shop/ships">Ships</Link>
-			      			<Link to="/shop/trains">Trains</Link>
-			      			<Link to="/shop/trucks-buses">Trucks/Buses</Link>
+			      			{shopMenu}
 			      		</ul>
 			      	</li>
 			      	<li><Link to="/about">About Us</Link></li>
 			      	<li><Link to="/contact">Contact Us</Link></li>
 			    </ul>
+			      <form className='form-group float-right'>
+					<input type='text' placeholder='sarchbar' className='barsarch' />
+					<button className='btn btn-sarch'>sarch</button>
+				</form>			    
 			  </div>
-			  <div className="container">
+			  <div className="container-fluid navi">
 			    <div className="navbar-header">
 			    	<Link to="/" className="navbar-brand">
 			    		<div className='logo'>
@@ -44,10 +82,24 @@ class NavBar extends Component{
 				   </ul>
 			  </div>
 			</nav>
-	        <Route exact path="/" component={Slick} />
         </div>
 	)
   }
 }
 
-export default NavBar
+
+function mapStateToProps(state){
+	return{
+		pl: state.productLine
+	}
+}
+
+function mapDispatchToProps(dispatch){
+	return bindActionCreators({
+		fetchPLines: fetchPLines
+	}, dispatch)
+}
+
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(NavBar)

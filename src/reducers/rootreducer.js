@@ -7,13 +7,15 @@
 import { combineReducers } from 'redux';
 
 // reducers
-import StudentReducer from './StudentReducer';
+import plReducer from './plReducer';
+import ProductReducer from './ProductReducer';
 
 const rootReducer = combineReducers({
 	//inside here we pass each reducer as a key/value
 	//each key will be available as a piece of state later
 
-	students: StudentReducer
+	productLine: plReducer,
+	products: ProductReducer
 
 })
 

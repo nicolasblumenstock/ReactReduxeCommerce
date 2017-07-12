@@ -7,13 +7,15 @@ import './App.css';
 // import rootReducer from './reducers/rootreducer.js';
 
 
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import reduxPromise from 'redux-promise';
 //allows redux and react to talk
 import { Provider } from 'react-redux';
 
 import reducers from './reducers/rootreducer.js';
 
-const theStore = createStore(reducers)
+const middle = applyMiddleware(reduxPromise)(createStore);
+const theStore = middle(reducers)
 
 
 //reactDom.render takes two args. what and where.

@@ -12,10 +12,11 @@ class Slick extends Component{
 			speed: 500,
 			slidesToShow: 1,
 			slidesToScroll: 1,
-			autoplay: true
+			autoplay: true,
+			arrows: true
 		}
 		return(
-			<div className='main'>
+			<div className='main container-fluid'>
 				<Slider {...settings}>
 					<div className='slick-image'><img src='/images/ferrari.jpg' alt='honk'/></div>
 					<div className='slick-image'><img src='/images/schooner.jpg' alt='honk'/></div>

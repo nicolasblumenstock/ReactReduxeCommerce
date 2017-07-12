@@ -5,7 +5,11 @@ body {
 	background-attachment: fixed;
 }
 
-.navbar {
+.navbar-white {
+	background-color: #6b6b6b;
+}
+
+.navi {
 	background-color: #4b4b4b;
 	color: white;
 }
@@ -14,12 +18,20 @@ body {
 	color: white;
 }
 
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:active {
+	color: #53ffd6;
+}
 .circleOne, .circleTwo{
 	border-radius: 50%;
 }
 
 .navbar-brand .logo {
 	display: inline-block;
+}
+
+.logo {
+	position: relative;
+	top: -5px;
 }
 
 .circleOne{
@@ -41,39 +53,31 @@ body {
 }
 
 
-.home {
-	color: #53ffd6;
-}
-
 .name{
-	margin-right: 25px;
 	font-weight: bold;
 	display: inline-block;
 	color: white;
 }
 
-.shop, .cart {
-	margin-right: 25px;
-}
-
-.login, .sarchbar, .cart {
-	float: right;
-	margin-left: 15px;
-}
-
-
 .btn-sarch, .barsarch {
 	display: inline-block;
-	padding: 5px 10px;
-	font-size: 17px;
-	border-radius: 0;
-	webkit-appearance: none;
-	border: 1px solid transparent;
+	padding: 5px 10px 5px;
+	/*font-size: 17px;*/
+	line-height: normal;
 	border: none;
 	outline: none;
 }
 
-.btn-sarch, .btn-sarch:active, .btn-sarch:focus, .barsarch:active, .barsarch:focus {
+.form-group{
+	margin-top: 12px;
+}
+
+
+.barsarch {
+	width: 65%;
+}
+
+.btn-sarch, .btn-sarch:active, .btn-sarch:focus, .barsarch:active, .barsarch:focus, .btn:focus, .btn:active, .btn {
 	outline: none;
 	border: none;
 }
@@ -140,19 +144,25 @@ body {
 }
 
 .dropdown-links a:nth-child(6){
-	top: 120px;
+	top: 140px;
 }
+
+.dropdown-links a:nth-child(7){
+	top:160px;
+}
+
+
 .dropdown-links a:hover, .dropdown-links a:focus{
-	color: black;
+	color: #9677D1;
 	text-decoration: none;
 }
 
 .dropdown-links a:focus{
-	color: #53ffd6;
+	color: #9677D1;
 }
 
 i {
-    border: solid black;
+    border: solid #b1a2cc;
     border-width: 0 3px 3px 0;
     display: inline-block;
     padding: 2px;
