@@ -9,13 +9,15 @@ import { combineReducers } from 'redux';
 // reducers
 import plReducer from './plReducer';
 import ProductReducer from './ProductReducer';
+import ProductLineReducer from './ProductLineReducer';
 
 const rootReducer = combineReducers({
 	//inside here we pass each reducer as a key/value
 	//each key will be available as a piece of state later
 
 	productLine: plReducer,
-	products: ProductReducer
+	products: ProductReducer,
+	pl: ProductLineReducer
 
 })
 

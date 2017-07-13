@@ -1,0 +1,10 @@
+var ProductLineReducer = function(state = null, action){
+	switch(action.type){
+		case 'FETCH_PRODUCTLINE':
+			return action.payload;
+		default:
+			return state;
+	}
+}
+
+export default ProductLineReducer;

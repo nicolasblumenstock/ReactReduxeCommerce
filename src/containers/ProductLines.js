@@ -4,18 +4,34 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import fetchProducts from '../actions/fetchProducts';
-
+import fetchProductLine from '../actions/fetchProductLine';
+		
 class ProductLines extends Component{
 
 
+
 	componentDidMount() {
-		var pl = this.props.match.params.pl;
-		this.props.fetchProducts(pl);
+		// console.log(this.props.pl)
+		var prod = this.props.match.params.pl
+		this.props.fetchProducts(prod);
+		// this.props.fetchProductLine(prod)
 	}
 
-	componentWillReceiveProps() {
-		var pl = this.props.match.params.pl;
-		this.props.fetchProducts(pl);
+	// shouldComponentUpdate(nextProps, nextState) {
+	// 	// console.log(this.props.pl)
+	// 	// console.log(nextState)
+	// 	if(this.props.pl !== nextProps.pl){
+	// 		return true;
+	// 	}else{
+	// 		return false;
+	// 	}
+	// }
+
+	componentWillUpdate(nextProps) {
+		// console.log(nextProps)
+		var prod = this.props.match.params.pl;
+		this.props.fetchProducts(prod);
+		// this.props.fetchProductLine(prod)
 	}
 
 
@@ -24,8 +40,8 @@ class ProductLines extends Component{
 		var mapped = [];
 		this.props.products.map((p, i)=>{
 			mapped.push(
-				<li>
-					<Link to={`/product/${p.productName}`} key={i}>{p.productName}</Link>
+				<li key={i}>
+					<Link to={`/product/${p.productName}`} >{p.productName}</Link>
 				</li>
 			)
 			return 'meh'
@@ -41,13 +57,15 @@ class ProductLines extends Component{
 
 	function mapStateToProps(state){
 		return{
-			products: state.products
+			products: state.products,
+			pl: state.pl
 		}
 	}
 
 	function mapDispatchToProps(dispatch){
 		return bindActionCreators({
-			fetchProducts: fetchProducts
+			fetchProducts: fetchProducts,
+			fetchProductLine: fetchProductLine
 		}, dispatch)
 	}
 

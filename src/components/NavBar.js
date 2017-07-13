@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import fetchPLines from '../actions/fetchPLines';
+import fetchProductLine from '../actions/fetchProductLine';
 
 
 class NavBar extends Component{
@@ -32,12 +33,12 @@ class NavBar extends Component{
   	// 	)
   	// 	return 'meh'
   	// })
-  	if(this.props.pl[0] === undefined){
+  	if(this.props.productlines[0] === undefined){
   		shopMenu = []
   	}else{
-  		this.props.pl.map((p, i)=>{
+  		this.props.productlines.map((p, i)=>{
   			shopMenu.push(
-				<Link to={`/shop/${p.link}`} key={i}>{p.productLine}</Link>
+				<Link to={`/shop/${p.link}`} key={i} onClick={()=>{this.props.fetchProductLine(p.link)}} >{p.productLine}</Link>
 			)
 			return 'meh'
   		})
@@ -90,14 +91,16 @@ class NavBar extends Component{
 
 function mapStateToProps(state){
 	return{
-		pl: state.productLine
+		productlines: state.productLine,
+		pl: state.pl
 	}
 }
 
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({
-		fetchPLines: fetchPLines
-	}, dispatch)
+		fetchPLines: fetchPLines,
+		fetchProductLine: fetchProductLine
+	}, dispatch)	
 }
 
 

@@ -121,9 +121,11 @@ body {
 	width: 150px;
 	text-align: left;
 	color: #777;
+	list-style-type: none;
 }
 
 .dropdown-links a:nth-child(1){
+	list-style-type: none;
 	top: 40px;
 }
 
