@@ -24,75 +24,88 @@ class NavBar extends Component{
 	}
 
 
+	render(){
+		var shopMenu = [];
+		var logged = [
+			<li className="text-right" key={1} ><Link to="/login">Login</Link></li>,
+			<li className="text-right" key={2}><Link to="/register">Register</Link></li>
+		];
+		// this.state.ressie.map((pl,index)=>{
+		// 	shopMenu.push(
+		// 		<Link to={`/shop/${pl.link}`} key={index}>{pl.productLine}</Link>
+		// 	)
+		// 	return 'meh'
+		// })
+		if(this.props.productlines[0] === undefined){
+			shopMenu = []
+		}else{
+			this.props.productlines.map((p, i)=>{
+				shopMenu.push(
+					<Link to={`/shop/${p.link}`} key={i} onClick={()=>{this.props.fetchProductLine(p.link)}} >{p.productLine}</Link>
+				)
+				return 'meh'
+			})
+		}
 
-  render(){
-  	var shopMenu = [];
-  	// this.state.ressie.map((pl,index)=>{
-  	// 	shopMenu.push(
-  	// 		<Link to={`/shop/${pl.link}`} key={index}>{pl.productLine}</Link>
-  	// 	)
-  	// 	return 'meh'
-  	// })
-  	if(this.props.productlines[0] === undefined){
-  		shopMenu = []
-  	}else{
-  		this.props.productlines.map((p, i)=>{
-  			shopMenu.push(
-				<Link to={`/shop/${p.link}`} key={i} onClick={()=>{this.props.fetchProductLine(p.link)}} >{p.productLine}</Link>
+		if((this.props.register !== null)){
+			logged.length = 0;
+			logged.push(
+				 <li className="text-right" key={1}><Link to='/account'>Welcome, {this.props.register.name} !</Link></li>,
+				 <li className="text-right" key={2}><Link to="/logout">Log Out</Link></li>
 			)
-			return 'meh'
-  		})
-  	}
+			// console.log(this.props.register.token)
+			
+		}
 
-    return(
-    	<div>
+	return(
+		<div>
 			<nav className="navbar navbar-default navbar-fixed-top">
-			  <div className="container-fluid navbar-white">
-			    <ul className="nav navbar-nav">
-			    	<li><Link to="/">Home</Link></li>
-			      	<li className="dropdown">
-			      		<Link to="/shop">Shop  <i className="arrow down" /></Link>
-			      		<ul className="dropdown-links">
-			      			{shopMenu}
-			      		</ul>
-			      	</li>
-			      	<li><Link to="/about">About Us</Link></li>
-			      	<li><Link to="/contact">Contact Us</Link></li>
-			    </ul>
-			      <form className='form-group float-right'>
-					<input type='text' placeholder='sarchbar' className='barsarch' />
-					<button className='btn btn-sarch'>sarch</button>
-				</form>			    
-			  </div>
-			  <div className="container-fluid navi">
-			    <div className="navbar-header">
-			    	<Link to="/" className="navbar-brand">
-			    		<div className='logo'>
-							<div className='circleOne'>
-								<div className='circleTwo'>
-									<span>S</span>
-								</div>					
+				<div className="container-fluid navbar-white">
+					<ul className="nav navbar-nav">
+						<li><Link to="/">Home</Link></li>
+						<li className="dropdown">
+							<Link to="/shop">Shop	<i className="arrow down" /></Link>
+							<ul className="dropdown-links">
+								{shopMenu}
+							</ul>
+						</li>
+						<li><Link to="/about">About Us</Link></li>
+						<li><Link to="/contact">Contact Us</Link></li>
+					</ul>
+					<form className='form-group float-right'>
+						<input type='text' placeholder='sarchbar' className='barsarch' />
+						<button className='btn btn-sarch'>sarch</button>
+					</form>					
+				</div>
+				<div className="container-fluid navi">
+					<div className="navbar-header">
+						<Link to="/" className="navbar-brand">
+							<div className='logo'>
+								<div className='circleOne'>
+									<div className='circleTwo'>
+										<span>S</span>
+									</div>					
+								</div>
 							</div>
-						</div>
 						<div className='name'>ARCH</div></Link>
-			    </div>
-				   <ul className="nav navbar-nav float-right">
-				      <li className="text-right"><Link to="/login">Login</Link></li>
-				      <li className="text-right"><Link to="/register">Register</Link></li>
-				      <li className="text-right"><Link to="/cart">(0) items in your cart | ($0.00)</Link></li>
-				   </ul>
-			  </div>
+					</div>
+					<ul className="nav navbar-nav float-right">
+						{logged}
+						<li className="text-right"><Link to="/cart">(0) items in your cart | ($0.00)</Link></li>
+					</ul>
+				</div>
 			</nav>
-        </div>
-	)
-  }
+		</div>
+		)
+	}
 }
 
 
 function mapStateToProps(state){
 	return{
 		productlines: state.productLine,
-		pl: state.pl
+		pl: state.pl,
+		register: state.register
 	}
 }
 

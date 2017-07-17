@@ -10,6 +10,8 @@ import { combineReducers } from 'redux';
 import plReducer from './plReducer';
 import ProductReducer from './ProductReducer';
 import ProductLineReducer from './ProductLineReducer';
+import registerReducer from './registerReducer';
+// import loginReducer from './loginReducer';
 
 const rootReducer = combineReducers({
 	//inside here we pass each reducer as a key/value
@@ -17,8 +19,8 @@ const rootReducer = combineReducers({
 
 	productLine: plReducer,
 	products: ProductReducer,
-	pl: ProductLineReducer
-
+	pl: ProductLineReducer,
+	register: registerReducer
 })
 
-export default rootReducer
+export default rootReducer;

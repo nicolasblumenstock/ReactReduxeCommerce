@@ -13,7 +13,6 @@ class Slick extends Component{
 			slidesToShow: 1,
 			slidesToScroll: 1,
 			autoplay: true,
-			arrows: true
 		}
 		return(
 			<div className='main container-fluid'>
