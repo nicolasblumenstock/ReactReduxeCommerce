@@ -12,6 +12,8 @@ import ProductReducer from './ProductReducer';
 import ProductLineReducer from './ProductLineReducer';
 import registerReducer from './registerReducer';
 // import loginReducer from './loginReducer';
+import CartReducer from './CartReducer';
+import CheckoutReducer from './CheckoutReducer';
 
 const rootReducer = combineReducers({
 	//inside here we pass each reducer as a key/value
@@ -20,7 +22,9 @@ const rootReducer = combineReducers({
 	productLine: plReducer,
 	products: ProductReducer,
 	pl: ProductLineReducer,
-	register: registerReducer
+	register: registerReducer,
+	cart: CartReducer,
+	checkout: CheckoutReducer
 })
 
 export default rootReducer;

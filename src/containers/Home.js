@@ -5,10 +5,10 @@ import {Link} from 'react-router-dom';
 // import '../../public/css/styles.css';
 
 class Home extends Component {
-	constructor(props) {
-		super(props);
+	// constructor(props) {
+	// 	super(props);
 		
-	}
+	// }
 
 	componentDidMount() {
 		this.props.fetchPLines();
@@ -20,7 +20,7 @@ class Home extends Component {
 	render(){
 		const plImages = [];
 		this.props.productLine.map((row,index)=>{
-			console.log(row.image)
+			// console.log(row.image)
 			plImages.push(
 				<div className='shop-img' key={index}>
 					<Link to={`/shop/${row.link}`}>

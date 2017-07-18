@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import fetchProducts from '../actions/fetchProducts';
 import fetchProductLine from '../actions/fetchProductLine';
+import UpdateCart from '../actions/UpdateCart';
 		
 class ProductLines extends Component{
 	constructor(props) {
@@ -50,7 +51,7 @@ class ProductLines extends Component{
 		// console.log(this.props.pl)
 		var prod = this.props.match.params.pl
 		const baseUrl = `${window.hostAddress}products/get/${prod}`;
-		const thePromise = $.getJSON(baseUrl,(results)=>{
+		$.getJSON(baseUrl,(results)=>{
 			this.setState({
 				prod: results
 			})			
@@ -76,7 +77,7 @@ class ProductLines extends Component{
 		// nextProps.fetchProducts(prod);
 		// var prod = this.props.match.params.pl
 		const baseUrl = `${window.hostAddress}products/get/${prod}`;
-		const thePromise = $.getJSON(baseUrl,(results)=>{
+		$.getJSON(baseUrl,(results)=>{
 			this.setState({
 				prod: results
 			})			
@@ -87,10 +88,11 @@ class ProductLines extends Component{
 
 
 	render(){
+		// console.log(this.props.cart)
 
 
-
-
+		var buttons = '';
+		// var logged = false;
 		var title = '';
 		if (this.state.prod[0] === undefined){
 			title = '';
@@ -111,6 +113,17 @@ class ProductLines extends Component{
 				inStock = 'Out of Stock!';
 				stockClass='bg-danger';
 			}
+		if (this.props.log !== null){
+			buttons  = <button className='btn btn-sarch' onClick={()=>{
+									this.props.updateCart({
+										pCode: p.productCode,
+										pPrice: p.buyPrice,
+										user: this.props.log.token
+									})
+								}}>Add to Cart</button>
+		}else{
+			buttons  = '';
+		}			
 			mapped.push(
 				<tr key={i}>
 					<td><Link to={`/product/${p.productName}`} >{p.productName}</Link></td>
@@ -120,10 +133,15 @@ class ProductLines extends Component{
 					<td className={stockClass}>{inStock}</td>
 					<td>${p.buyPrice}</td>
 					<td>${p.MSRP}</td>
+					<td>
+						{buttons}
+					</td>
 				</tr>
 			)
 			return 'meh'
 		})
+
+		// console.log(this.props.cart)
 		return(
 			<div>
 				<h1>{title}</h1>
@@ -152,14 +170,17 @@ class ProductLines extends Component{
 	function mapStateToProps(state){
 		return{
 			products: state.products,
-			pl: state.pl
+			pl: state.pl,
+			cart: state.cart,
+			log: state.register
 		}
 	}
 
 	function mapDispatchToProps(dispatch){
 		return bindActionCreators({
 			fetchProducts: fetchProducts,
-			fetchProductLine: fetchProductLine
+			fetchProductLine: fetchProductLine,
+			updateCart: UpdateCart
 		}, dispatch)
 	}
 

@@ -3,6 +3,7 @@ import { Form, FormControl, FormGroup, ControlLabel, Button, Col } from 'react-b
 import { bindActionCreators } from 'redux';
 import registerAction from '../actions/registerAction';
 import {connect} from 'react-redux';
+import $ from 'jquery';
 // import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 
 
@@ -10,9 +11,19 @@ class Register extends Component{
 	constructor(props) {
 		super(props);
 		this.state = {
-			message: 'Register With Us!'
+			message: 'Register With Us!',
+			salesReps: []
 		}
 		this.handleInfo = this.handleInfo.bind(this);
+	}
+
+	componentDidMount() {
+		const baseUrl = `${window.hostAddress}salesReps`;
+		$.getJSON(baseUrl,(results)=>{
+			this.setState({
+				salesReps: results
+			})
+		});
 	}
 
 	handleInfo(e){
@@ -66,18 +77,26 @@ class Register extends Component{
 
 	componentWillReceiveProps(nextProps) {
 	
-	if (nextProps.register !== null){		
-		if(nextProps.register.msg === 'ok'){
-				nextProps.history.push('/')
-			}else if(nextProps.register.msg !== 'ok'){
-				this.setState({message: nextProps.register.msg})
+		if (nextProps.register !== null){		
+			if(nextProps.register.msg === 'ok'){
+					nextProps.history.push('/')
+				}else if(nextProps.register.msg !== 'ok'){
+					this.setState({message: nextProps.register.msg})
+				}
 			}
-		}
 	}
 
 
 	render(){
-
+		var reps = [];
+		if(this.state.salesReps[0] !== undefined){
+			this.state.salesReps.map((s,i)=>{
+				reps.push(
+					<option value={s.employeeNumber} key={i}>{s.firstName} {s.lastName}</option>
+				)
+				return 'meh'
+			})
+		}
 		return(
 			<div className='register-wrapper'>
 				<h1>{this.state.message}</h1>
@@ -134,10 +153,12 @@ class Register extends Component{
                 			</FormControl>    
             			</Col>
 						<Col componentClass={ControlLabel} sm={2}>
-							Sales Rep #
+							Sales Rep
 						</Col>
 						<Col sm={4}>
-							<FormControl type='text' placeholder='Sales Rep You Worked With' name='employee' />
+							<FormControl componentClass='select' placeholder='Sales Rep You Worked With'>
+								{reps}
+							</FormControl>
 						</Col>            			
            			 </FormGroup>															
 					<FormGroup controlId='formHorizontalName'>

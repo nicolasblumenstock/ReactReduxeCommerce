@@ -8,12 +8,12 @@ import fetchProductLine from '../actions/fetchProductLine';
 
 
 class NavBar extends Component{
-	// constructor(props) {
-	// 	super(props);
-	// 	this.state = {
-	// 		ressie: []
-	// 	}
-	// }
+	constructor(props) {
+		super(props);
+		this.state = {
+			cart: []
+		}
+	}
 
 	componentDidMount() {
 		// const baseUrl = window.hostAddress + 'productlines/get';
@@ -23,8 +23,17 @@ class NavBar extends Component{
 		this.props.fetchPLines();
 	}
 
+	// componentWillUpdate(nextProps) {
+	// 	var carty = [];
+	// 	carty.push(nextProps.cart)
+	// 	this.setState({
+	// 		cart: nextProps.cart
+	// 	})
+	// }
+
 
 	render(){
+
 		var shopMenu = [];
 		var logged = [
 			<li className="text-right" key={1} ><Link to="/login">Login</Link></li>,
@@ -48,6 +57,7 @@ class NavBar extends Component{
 		}
 
 		if((this.props.register !== null)){
+			// console.log(this.props.register.cart)
 			logged.length = 0;
 			logged.push(
 				 <li className="text-right" key={1}><Link to='/account'>Welcome, {this.props.register.name} !</Link></li>,
@@ -55,6 +65,12 @@ class NavBar extends Component{
 			)
 			// console.log(this.props.register.token)
 			
+		}
+		var total = 0;
+		var cartNum = 0;
+		if(this.props.cart.total !== undefined){
+			total = this.props.cart.total
+			cartNum = this.props.cart.numItems
 		}
 
 	return(
@@ -91,7 +107,7 @@ class NavBar extends Component{
 					</div>
 					<ul className="nav navbar-nav float-right">
 						{logged}
-						<li className="text-right"><Link to="/cart">(0) items in your cart | ($0.00)</Link></li>
+						<li className="text-right"><Link to="/cart">({cartNum}) items in your cart | (${total})</Link></li>
 					</ul>
 				</div>
 			</nav>
@@ -105,7 +121,8 @@ function mapStateToProps(state){
 	return{
 		productlines: state.productLine,
 		pl: state.pl,
-		register: state.register
+		register: state.register,
+		cart: state.cart
 	}
 }
 
