@@ -4,6 +4,7 @@ var mysql = require('mysql');
 var config = require('../config/config');
 var bcrypt = require('bcrypt-nodejs');
 var randToken = require('rand-token');
+var stripe = require('stripe')(config.stripe);
 var connection = mysql.createConnection({
 	host: config.host,
 	user: config.user,
@@ -204,6 +205,31 @@ router.post('/checkout', (req,res)=>{
 			})
 		}
 })
+})
+
+router.post('/stripe',(req,res)=>{
+	var userToken = req.body.token;
+	var stripeToken = req.body.stripeToken;
+	var amount = req.body.amount;
+	stripe.charges.create({
+		amount: amount,
+		currency: 'usd',
+		source: stripeToken,
+		description: 'Charges for classicmodels on Sarch. Sarch Cart Charged.'
+	},(error, charge)=>{
+		if(error){
+			res.json({
+				msg: error
+			})
+		}else{
+			const userQuery = 'select users.uid,cart.productCode,products.buyPrice from users inner join cart on users.id = cart.id inner join products on cart.productCode = products.productCode where token = ?'
+			connection.query(userQuery, [userToken], (e,r)=>{
+				res.json({msg:'paymentSuccess'})
+			})
+
+		}
+	})
+
 })
 
 

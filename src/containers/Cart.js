@@ -21,21 +21,23 @@ class Cart extends Component {
 	    makePayment() {
         var handler = window.StripeCheckout.configure({
             key: 'pk_test_BdXTGWFPZxnNwmYvcaFc39DK',
+            image: 'https://yt3.ggpht.com/-uJh4oSQAwak/AAAAAAAAAAI/AAAAAAAAAAA/AMGKfKvDP3w/s900-c-k-no-mo-rj-c0xffffff/photo.jpg',
             locale: 'auto',
             token: (token) => {
+            	console.log(token)
                 var theData = {
-                    amount: 10 * 100,
+                    amount: this.props.cart.total * 100,
                     stripeToken: token.id,
                     userToken: this.props.logged.token,
                 }
                 $.ajax({
                     method: 'POST',
-                    url: window.hostAdress + 'stripe',
+                    url: `${window.hostAddress}stripe`,
                     data: theData
                 }).done((data) => {
                     console.log(data);
                     if (data.msg === 'paymentSuccess') {
-
+                    	this.props.history.push('/thankYou');
                     }
                 });
             }
@@ -43,7 +45,7 @@ class Cart extends Component {
         handler.open({
             name: "Pay Now",
             description: 'Pay Now',
-            amount: 10 * 100
+            amount: this.props.cart.total * 100
         })
     }
 
@@ -109,7 +111,7 @@ class Cart extends Component {
 function mapStateToProps(state){
 	return{
 		logged: state.register,
-		// cart: state.cart,
+		cart: state.cart,
 		checkoutItems: state.checkout
 	}
 }
